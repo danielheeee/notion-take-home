@@ -1,0 +1,23 @@
+{
+  "name": "notion-take-home",
+  "version": "1.0.0",
+  "description": "cli tool for parsing book club ratings and uploading to notion database",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "Daniel He",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/preset-env": "^7.24.0",
+    "@notionhq/client": "^2.2.14",
+    "babel-jest": "^29.7.0",
+    "dotenv": "^16.4.5",
+    "ts-jest": "^29.1.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
