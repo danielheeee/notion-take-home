@@ -1,4 +1,4 @@
-import { notion } from "./utils/notion.js"
+import { notion } from "./notion.js"
 
 
 export const deleteBookRating = async (page_id) => {

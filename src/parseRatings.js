@@ -16,11 +16,11 @@ export const parseRatings = async (csv_buffer) => {
         // Skip empty rows.
         if (!row) return;
 
-        // Split row into properties and normalize book title and user by trimming and converting to lowercase.
+        // Split row into properties and normalize book title and user name by trimming and converting to lowercase.
         const [bookTitleRaw, userRaw, ratingRaw] = row.split(",");
         const book_title = bookTitleRaw?.toLowerCase()?.trim();
         const user = userRaw?.toLowerCase()?.trim();
-        const rating = parseInt(ratingRaw, 10);
+        const rating = parseInt(ratingRaw);
 
         // Update the results object with the new rating, duplicate book ratings by same user will only consider last rating
         if (book_title in results) {

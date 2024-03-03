@@ -1,5 +1,5 @@
-import { notion } from "./utils/notion.js"
-import { capitalizeFirstLetterOfEachWord } from "./utils/capitalizeFirstLetterOfEachWord.js"
+import { notion } from "./notion.js"
+import { capitalizeFirstLetterOfEachWord } from "../utils/capitalizeFirstLetterOfEachWord.js"
 
 // Adds a book rating (Notion Page Object) to a Notion Database
 export const addBookRating = async (database_id, properties) => {
