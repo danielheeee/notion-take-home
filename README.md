@@ -11,7 +11,7 @@ It then updates this [Notion Database](https://jungle-glove-ea5.notion.site/b71b
 
 ## Usage
 
-Open a terminal and navigate to the root directory of the source code, then run the following commands:
+Open a terminal and navigate to the root directory of this file, then run the following commands:
 
     $ npm i
     $ node .
