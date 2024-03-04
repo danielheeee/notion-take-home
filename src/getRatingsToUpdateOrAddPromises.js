@@ -30,7 +30,7 @@ export const getRatingsToUpdateOrAddPromises = async (newRatings, existingRating
         if (!existingBookRatingsMap.has(book_title)) {
             // If the book is not found, add it to the database
             console.log(`Adding "${book_title}" to the database.`)
-            promises.push(addBookRating(database_id, { book_title, avg_rating, num_favorites }))
+            promises.push(() => addBookRating(database_id, { book_title, avg_rating, num_favorites }))
         } else {
             // If the book exists, Determine which properties need to be updated based on changes
             const existingBookRating = existingBookRatingsMap.get(book_title)
@@ -45,7 +45,7 @@ export const getRatingsToUpdateOrAddPromises = async (newRatings, existingRating
 
             // If there are properties to update, add the update operation to the batch
             if (Object.keys(propertiesToUpdate).length > 0) {
-                promises.push(updateBookRating(existingBookRating.id, propertiesToUpdate))
+                promises.push(() => updateBookRating(existingBookRating.id, propertiesToUpdate))
             } else {
                 console.log(`Book titled "${book_title}" no update necessary.`)
             }

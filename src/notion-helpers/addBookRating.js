@@ -1,10 +1,11 @@
 import { notion } from "./notion.js"
 import { capitalizeFirstLetterOfEachWord } from "../utils/capitalizeFirstLetterOfEachWord.js"
 
-// Adds a book rating (Notion Page Object) to a Notion Database
+
+// Adds a book rating (Notion Page Object) to a Notion Database, capitalizing the first letter of each word in the title
 export const addBookRating = async (database_id, properties) => {
 
-    const response = await notion.pages.create({
+    return await notion.pages.create({
         parent: {
             type: "database_id",
             database_id
@@ -31,5 +32,4 @@ export const addBookRating = async (database_id, properties) => {
         }
     })
 
-    return response
 }

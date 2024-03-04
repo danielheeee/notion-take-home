@@ -10,7 +10,7 @@ import { deleteBookRating } from "./notion-helpers/deleteBookRating.js";
  * @param {Object[]} existingRatings - An array of objects representing the existing ratings, where each object has a `properties` object with a "Book Title" key.
  * @returns {Promise[]} An array of promises, each promise corresponds to a delete operation for a book rating not present in the new ratings.
  */
-const getRatingsToDeletePromises = (newRatings, existingRatings) => {
+export const getRatingsToDeletePromises = (newRatings, existingRatings) => {
 
     let promises = []
 
@@ -23,11 +23,9 @@ const getRatingsToDeletePromises = (newRatings, existingRatings) => {
         if (!ratingsTitles.has(existingBookTitle)) {
             // If not present, create promise to delete the rating from the database
             console.log(`"${existingBookTitle}" is not present in the new ratings, deleting.`)
-            promises.push(deleteBookRating(rating.id))
+            promises.push(() => deleteBookRating(rating.id))
         }
     });
 
     return promises
 }
-
-export default getRatingsToDeletePromises;

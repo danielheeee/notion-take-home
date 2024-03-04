@@ -1,10 +1,10 @@
 /**
- * Parses a CSV buffer of book ratings and calculates average ratings and the number of favorites for each book.
+ * Parses a CSV buffer string of book ratings and calculates average ratings and the number of favorites for each book.
  * 
  * @param {string} csv_buffer - The CSV content as a string, where each row contains book title, user, and rating.
  * @returns {Promise<Array>} - A promise that resolves to an array of book data, including book title, average ratings and favorites count.
  */
-export const parseRatings = async (csv_buffer) => {
+export const parseRatingsCSVBuffer = async (csv_buffer) => {
     // Split the CSV content into rows.
     const ratings = csv_buffer.split('\n');
 
@@ -18,9 +18,15 @@ export const parseRatings = async (csv_buffer) => {
 
         // Split row into properties and normalize book title and user name by trimming and converting to lowercase.
         const [bookTitleRaw, userRaw, ratingRaw] = row.split(",");
-        const book_title = bookTitleRaw?.toLowerCase()?.trim();
-        const user = userRaw?.toLowerCase()?.trim();
-        const rating = parseInt(ratingRaw);
+
+        if (!bookTitleRaw || !userRaw || !ratingRaw) {
+            console.log("Invalid CSV ROW, missing book title, user, or rating")
+            return
+        }
+
+        const book_title = bookTitleRaw?.toLowerCase()?.trim()
+        const user = userRaw?.toLowerCase()?.trim()
+        const rating = parseInt(ratingRaw)
 
         // Update the results object with the new rating, duplicate book ratings by same user will only consider last rating
         if (book_title in results) {
