@@ -9,8 +9,8 @@ jest.mock('fs', () => ({
 
 describe('parseRatingsCSVBuffer', () => {
 
-    describe('Single rating for one book', () => {
-        it('where rating < 5', async () => {
+    describe('Parsing single rating for one book', () => {
+        it('Handles a rating less than 5', async () => {
             const csvBuffer = `book1,Daniel H,4`;
 
             const expected = [
@@ -20,7 +20,7 @@ describe('parseRatingsCSVBuffer', () => {
             const result = await parseRatingsCSVBuffer(csvBuffer);
             expect(result).toEqual(expected);
         })
-        it('where rating = 5', async () => {
+        it('Handles a ratings equal to 5', async () => {
             const csvBuffer = `book1,Daniel H,5`;
 
             const expected = [
@@ -31,10 +31,10 @@ describe('parseRatingsCSVBuffer', () => {
             expect(result).toEqual(expected);
         })
     })
-    describe('Multiple ratings for the same book', () => {
+    describe('Parsing multiple ratings for the same book', () => {
         describe('By the same member', () => {
-            describe('With same member name capitalization and whitespace', () => {
-                it('where all ratings < 5', async () => {
+            describe('When member name capitalization and whitespace are consistent:', () => {
+                it('Handles all ratings less than 5', async () => {
                     const csvBuffer =
                         `book1,Daniel H,0
                         book1,Daniel H,1`
@@ -46,7 +46,7 @@ describe('parseRatingsCSVBuffer', () => {
                     const result = await parseRatingsCSVBuffer(csvBuffer);
                     expect(result).toEqual(expected);
                 })
-                it('where most recent rating = 5', async () => {
+                it('Handles the most recent rating equal to 5', async () => {
                     const csvBuffer =
                         `book1,Daniel H,0
                         book1,Daniel H,5`
@@ -58,7 +58,7 @@ describe('parseRatingsCSVBuffer', () => {
                     const result = await parseRatingsCSVBuffer(csvBuffer);
                     expect(result).toEqual(expected);
                 })
-                it('where a rating = 5 but is not most recent', async () => {
+                it('Handles a non-most-recent rating equal to 5', async () => {
                     const csvBuffer =
                         `book1,Daniel H,5
                         book1,Daniel H,3`
@@ -70,7 +70,7 @@ describe('parseRatingsCSVBuffer', () => {
                     const result = await parseRatingsCSVBuffer(csvBuffer);
                     expect(result).toEqual(expected);
                 })
-                it('where all ratings = 5', async () => {
+                it('Handles all ratings equal to 5', async () => {
                     const csvBuffer =
                         `book1,Daniel H,5
                         book1,Daniel H,5
@@ -84,8 +84,8 @@ describe('parseRatingsCSVBuffer', () => {
                     expect(result).toEqual(expected);
                 })
             })
-            describe('With different member name capitalization and whitespace', () => {
-                it('where all ratings < 5', async () => {
+            describe('When member name capitalization and whitespace vary:', () => {
+                it('Handles all ratings less than 5', async () => {
                     const csvBuffer =
                         `book1,DANIEL H,0
                         book1,   daniel h  ,1`
@@ -97,7 +97,7 @@ describe('parseRatingsCSVBuffer', () => {
                     const result = await parseRatingsCSVBuffer(csvBuffer);
                     expect(result).toEqual(expected);
                 })
-                it('where most recent rating = 5', async () => {
+                it('Handles the most recent rating equal to 5', async () => {
                     const csvBuffer =
                         `book1,DANIEL H,0
                         book1,   daniel h  ,5`
@@ -109,7 +109,7 @@ describe('parseRatingsCSVBuffer', () => {
                     const result = await parseRatingsCSVBuffer(csvBuffer);
                     expect(result).toEqual(expected);
                 })
-                it('where a rating = 5 but is not most recent', async () => {
+                it('Handles a non-most-recent rating equal to 5', async () => {
                     const csvBuffer =
                         `book1,DANIEL H,5
                         book1,   daniel h  ,3`
@@ -121,7 +121,7 @@ describe('parseRatingsCSVBuffer', () => {
                     const result = await parseRatingsCSVBuffer(csvBuffer);
                     expect(result).toEqual(expected);
                 })
-                it('where all ratings = 5', async () => {
+                it('Handles all ratings equal to 5', async () => {
                     const csvBuffer =
                         `book1,Daniel H,5
                         book1,DANIEL H,5
@@ -137,9 +137,9 @@ describe('parseRatingsCSVBuffer', () => {
             })
         })
 
-        describe('By different members (unique)', () => {
-            describe('With same book name capitalization and whitespace', () => {
-                it('where all ratings < 5', async () => {
+        describe('By Different Members (Unique)', () => {
+            describe('When book name capitalization and whitespace are consistent:', () => {
+                it('Handles all ratings less than 5', async () => {
                     const csvBuffer =
                         `book 1,user1,1
                         book 1,user2,2
@@ -156,7 +156,7 @@ describe('parseRatingsCSVBuffer', () => {
                     const result = await parseRatingsCSVBuffer(csvBuffer);
                     expect(result).toEqual(expected);
                 })
-                it('where some ratings = 5', async () => {
+                it('Handles some ratings equal to 5', async () => {
                     const csvBuffer =
                         `book 1,user1,1
                         book 1,user2,2
@@ -173,7 +173,7 @@ describe('parseRatingsCSVBuffer', () => {
                     const result = await parseRatingsCSVBuffer(csvBuffer);
                     expect(result).toEqual(expected);
                 })
-                it('where all ratings = 5', async () => {
+                it('Handles all ratings equal to 5', async () => {
                     const csvBuffer =
                         `book 1,user1,5
                         book 1,user2,5
@@ -191,8 +191,8 @@ describe('parseRatingsCSVBuffer', () => {
                     expect(result).toEqual(expected);
                 })
             })
-            describe('With different book name capitalization and whitespace', () => {
-                it('where all ratings < 5', async () => {
+            describe('When book name capitalization and whitespace vary:', () => {
+                it('Handles all ratings less than 5', async () => {
                     const csvBuffer =
                         `book 1,user1,1
                          book 1,user2,2
@@ -209,7 +209,7 @@ describe('parseRatingsCSVBuffer', () => {
                     const result = await parseRatingsCSVBuffer(csvBuffer);
                     expect(result).toEqual(expected);
                 })
-                it('where some ratings = 5', async () => {
+                it('Handles some ratings equal to 5', async () => {
                     const csvBuffer =
                         `book 1,user1,1
                     book 1,user2,2
@@ -226,7 +226,7 @@ describe('parseRatingsCSVBuffer', () => {
                     const result = await parseRatingsCSVBuffer(csvBuffer);
                     expect(result).toEqual(expected);
                 })
-                it('where all ratings = 5', async () => {
+                it('Handles all ratings equal to 5', async () => {
                     const csvBuffer =
                         `book 1,user1,5
                          book 1,user2,5
@@ -246,9 +246,9 @@ describe('parseRatingsCSVBuffer', () => {
             })
         })
 
-        describe('By different members (contains duplicates)', () => {
-            describe('With duplicate reviews from same member', () => {
-                it('where all ratings < 5', async () => {
+        describe('By Different Members (Contains Duplicates)', () => {
+            describe('With duplicate reviews from the same member:', () => {
+                it('Handles all ratings less than 5', async () => {
                     const csvBuffer =
                         `book 1,user1,1
                         book 1,user1,2
@@ -263,7 +263,7 @@ describe('parseRatingsCSVBuffer', () => {
                     const result = await parseRatingsCSVBuffer(csvBuffer);
                     expect(result).toEqual(expected);
                 })
-                it('where some ratings = 5, including most recent duplicate review', async () => {
+                it('Handles some ratings equal to 5, including the most recent duplicate review', async () => {
                     const csvBuffer =
                         `book 1,user1,1
                             book 1,user1,2
@@ -278,13 +278,13 @@ describe('parseRatingsCSVBuffer', () => {
                     const result = await parseRatingsCSVBuffer(csvBuffer);
                     expect(result).toEqual(expected);
                 })
-                it('where some ratings = 5, not including most recent duplicate review', async () => {
+                it('Handles some ratings equal to 5, excluding the most recent duplicate review', async () => {
                     const csvBuffer =
                         `book 1,user1,5
-                            book 1,user1,5
-                            book 1,user1,3
-                            book 1,user2,4
-                            book 1,user3,5`
+                        book 1,user1,5
+                        book 1,user1,3
+                        book 1,user2,4
+                        book 1,user3,5`
 
                     const expected = [
                         { book_title: 'book 1', avg_rating: 4, num_favorites: 1 },
@@ -293,7 +293,7 @@ describe('parseRatingsCSVBuffer', () => {
                     const result = await parseRatingsCSVBuffer(csvBuffer);
                     expect(result).toEqual(expected);
                 })
-                it('where all ratings = 5', async () => {
+                it('Handles all ratings equal to 5', async () => {
                     const csvBuffer =
                         `book 1,user1,5
                             book 1,user1,5
@@ -311,9 +311,8 @@ describe('parseRatingsCSVBuffer', () => {
             })
         })
     })
-
-    describe('Multiple ratings for the same book with different book name capitalization and whitespace', () => {
-        it('by the same member', async () => {
+    describe('Parsing multiple Ratings for the same book with different book name capitalization and whitespace', () => {
+        it('By the same member', async () => {
 
             const csvBuffer =
                 `book 1,user1,1
@@ -351,7 +350,7 @@ describe('parseRatingsCSVBuffer', () => {
         })
     })
 
-    it('Deterministic results for identical inputs', async () => {
+    it('Ensures deterministic results for identical inputs', async () => {
         const csvBuffer1 =
             `book1,Daniel H,5
             book2,David H,4
@@ -376,7 +375,7 @@ describe('parseRatingsCSVBuffer', () => {
         expect(result1).toEqual(result2); // Ensure determinism by comparing the two results directly
     })
 
-    it('Deterministic results for identical inputs with different orders', async () => {
+    it('Ensures deterministic results for identical inputs with different orders', async () => {
         const csvBuffer1 =
             `book1,Daniel H,5
             book2,David H,4
@@ -418,7 +417,7 @@ beforeAll(() => {
 describe('gatherRatingsToDeletePromises', () => {
 
 
-    it('one or more existing ratings not found in new ratings', async () => {
+    it('Identifies existing ratings are not found in new ratings', async () => {
 
         const csvBuffer =
             `Book 1,Daniel H,5
@@ -430,7 +429,7 @@ describe('gatherRatingsToDeletePromises', () => {
         expect(deletePromises.length).toEqual(1)
     })
 
-    it('all existing ratings are present in new ratings', async () => {
+    it('Confirms no deletes needed when all existing ratings are present in new ratings', async () => {
 
         const csvBuffer =
             `Book 1,Daniel H,5
@@ -445,8 +444,8 @@ describe('gatherRatingsToDeletePromises', () => {
 })
 
 describe('getRatingsToUpdateOrAddPromises', () => {
-    describe('A new rating is present in existing ratings', () => {
-        it('whose are different from existing rating properties', async () => {
+    describe('When a new rating is present in existing ratings:', () => {
+        it('Identifies when properties differ from existing rating properties', async () => {
             
             // Book 1 rating in existing ratings is 5
             const csvBuffer =
@@ -459,7 +458,7 @@ describe('getRatingsToUpdateOrAddPromises', () => {
 
             expect(updateOrAddPromises.length).toEqual(1)
         })
-        it('whose properties are same as existing rating properties', async () => {
+        it('Confirms no changes when properties match existing rating properties', async () => {
             
             const csvBuffer =
                 `Book 1,Daniel H,5 
@@ -472,7 +471,7 @@ describe('getRatingsToUpdateOrAddPromises', () => {
             expect(updateOrAddPromises.length).toEqual(0)
         })
     })
-    it('A new rating is not present in existing ratings', async () => {
+    it('Identifies a new rating not present in existing ratings', async () => {
         const csvBuffer =
                 `Book 1,Daniel H,5 
                 Book 2,David H,4

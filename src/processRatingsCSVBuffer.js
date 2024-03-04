@@ -24,7 +24,7 @@ export const processRatingsCSVBuffer = async (csvBuffer, database_id) => {
     const operations = [...updatePromises, ...deletePromises]
 
     // Execute all add, update, and delete operations in parallel
-    // NOTE: RATE LIMIT 429 NOT HANDLED YET...
+    // NOTE: RATE LIMIT 429 CAUGHT BUT NOT HANDLED...
     await Promise
         .all(operations.map(op => op()))
         .then(() => {

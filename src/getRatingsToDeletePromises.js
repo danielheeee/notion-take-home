@@ -18,6 +18,7 @@ export const getRatingsToDeletePromises = (newRatings, existingRatings) => {
 
     existingRatings.forEach(rating => {
         // Check if the book in the database is not present in the new ratings
+        // Assumes that book title in database is not edited after insertion
         const existingBookTitle = rating.properties["Book Title"].title.at(0).plain_text.toLowerCase().trim()
 
         if (!ratingsTitles.has(existingBookTitle)) {

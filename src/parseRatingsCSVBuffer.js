@@ -24,6 +24,7 @@ export const parseRatingsCSVBuffer = async (csv_buffer) => {
             return
         }
 
+        // Edge case: mixed whitespace within book title will be treated as separate books, ex: "Harry Potter", "HarryPotter"
         const book_title = bookTitleRaw?.toLowerCase()?.trim()
         const user = userRaw?.toLowerCase()?.trim()
         const rating = parseInt(ratingRaw)
