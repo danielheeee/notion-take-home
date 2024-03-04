@@ -26,7 +26,7 @@ This program includes a suite of unit tests. Run the following command to test:
 
 ## How this works
 
-The **processRatingsCSVBuffer** function processes a CSV buffer containing ratings data. It interacts with a database to update existing ratings, add new ones, and delete outdated ratings. It does this by parsing the CSV data, querying the database, generating promises for only the necessary operations, executing these operations in parallel, and providing feedback on the success or failure of the operations.
+The **processRatingsCSVBuffer** function processes a CSV buffer containing ratings data. It interacts with a database to update existing ratings, add new ones, and delete outdated ratings. It does this by parsing the CSV data, querying the database, generating promises for **only the necessary operations**, executing these operations in parallel, and providing feedback on the success or failure of the operations.
 
 The following utilities are used:
 
@@ -105,6 +105,20 @@ The following assumptions were made about the Book club and it's goals:
 Thus, flexibility and extensibility for storing additional data types was prioritized over pure speed/memory.
 
 A faster (in constant time) and more memory efficient approach to calculate average ratings and number of favorite were considered, for example, iterating through each book rating and calculating properties as numbers without explicitly storing each user's unique rating in a map. This avoid an aditional iteration cycle through each book to calculate average rating and number of favorites, and does not require the use of the book rating's map described above. 
+
+## getRatingsToUpdateOrAddPromises
+
+This function returns a list of promises to either update existing book ratings or add new ones to a Notion database.
+ 
+This function iterates over a list of book ratings, checks if each book is already present in existing ratings, and then decides whether to update the existing entry or add a new one based on the presence of the book. It uses the book title property of each rating as the key for this comparison.
+
+## getRatingsToDeletePromises
+
+Thie fuctions returns a list of promises for deleting book ratings that are not present in the new ratings.
+
+This function compares the titles of books in the new ratings against the existing ratings.
+If a book title from the existing ratings is not found in the new ratings, a promise to delete
+that book rating is added to the list. 
 
 ## Not included
 
