@@ -88,13 +88,29 @@ Each book's ratings are stored in a map indexed by book title. Each entry in thi
     }    
 
 ### Motivation
-This approach of storing ratings in a map indexed by book title and each book entry containing a user_ratings map provides flexibility for future enhancements. Adding additional data points for each user, such as written reviews, or including more data points for each book can be easily accommodated within the existing structure. The flexibility allows for seamless expansion of the data model to incorporate new information without requiring significant changes to the existing implementation.
+This approach of storing ratings in a map indexed by book title and each book entry containing a user_ratings map provides flexibility for future enhancements. 
 
-### Trade offs:
-TODO
+Adding additional data points for each user (ex: written review for the book, favorite quotes, total read time, etc) or including more data points for each book (ex: synopsis/summary, page count, author, book club group meeting notes, etc) can be easily accommodated within the existing structure. The flexibility allows for seamless expansion of the data model to incorporate new information without requiring significant changes to the existing implementation.
 
 **Ignoring duplicate user reviews:** 
 When processing duplicate ratings for the same book by the same user, the new rating will override the old one in the user_ratings map, ensuring that only the latest review is taken into account for each user.
+
+### Trade offs:
+The following assumptions were made about the Book club and it's goals:
+
+    1. Rate of book club reviews is not incredibly high (~100 reviews/year based on ratings.csv size)
+    2. Book club database should store and surface interesting insights, which can change over time.
+    3. It is important that each insight can be attributed back to a book club member, names and faces can sometimes mean more than just stats.
+
+Thus, flexibility and extensibility for storing additional data types was prioritized over pure speed/memory.
+
+A faster (in constant time) and more memory efficient approach to calculate average ratings and number of favorite were considered, for example, iterating through each book rating and calculating properties as numbers without explicitly storing each user's unique rating in a map. This avoid an aditional iteration cycle through each book to calculate average rating and number of favorites, and does not require the use of the book rating's map described above. 
+
+## Not included
+
+1. Not rate limit safe, 429 error is caught but not yet handled, 
+2. Support for multiple book languages, ex: "Harry Potter and the Philosopher's Stone" (English) / "Harry Potter à l'école des sorciers" (French). These will be treated as separate books
+3. Support for mixed whitespace within book titles, ex: "Harry Potter" / "HarryPotter"
 
 ## Short answers
 
